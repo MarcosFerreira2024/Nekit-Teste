@@ -23,7 +23,7 @@ public class FindTask {
     public List<Task> execute(FindTaskDTO query){
 
         try{
-            TaskPriority.valueOf(query.priority().toUpperCase(Locale.ROOT));
+            if(query.priority() != null) TaskPriority.valueOf(query.priority().toUpperCase(Locale.ROOT));
 
         } catch (IllegalArgumentException e) {
             throw new DomainException("Wrong priority usage");
