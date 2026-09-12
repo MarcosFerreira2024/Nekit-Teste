@@ -1,14 +1,12 @@
 package com.example.demo.application.useCase.task;
 
 import com.example.demo.application.dto.task.CreateTaskDTO;
-import com.example.demo.domain.entity.Project;
 import com.example.demo.domain.entity.Task;
 import com.example.demo.domain.exceptions.ResourceNotFoundException;
 import com.example.demo.infra.repository.ProjectRepository;
 import com.example.demo.infra.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class CreateTask {
