@@ -6,9 +6,8 @@ import com.example.demo.application.useCase.project.DeleteProject;
 import com.example.demo.application.useCase.project.FindProjectById;
 import com.example.demo.application.useCase.project.UpdateProject;
 import com.example.demo.domain.entity.Project;
+import com.example.demo.shared.ApiResponse;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,14 +19,14 @@ public class ProjectController {
     private final CreateProject createProject;
     private final DeleteProject deleteProject;
     private final UpdateProject updateProject;
-    private final FindProjectById  findProjectById;
+    private final FindProjectById findProjectById;
 
     public ProjectController(
             CreateProject createProject,
             DeleteProject deleteProject,
             UpdateProject updateProject,
             FindProjectById findProjectById
-            ) {
+    ) {
         this.createProject = createProject;
         this.deleteProject = deleteProject;
         this.updateProject = updateProject;
@@ -35,34 +34,45 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project create(
+    public ApiResponse<Project> create(
             @RequestBody @Valid CreateProjectDTO dto
     ) {
-        return createProject.execute(dto);
+        return new ApiResponse<>(
+                true,
+                createProject.execute(dto),
+                "Created project with success"
+        );
     }
 
     @DeleteMapping("/{projectId}")
-    public ResponseEntity<String> delete(
+    public ApiResponse<Object> delete(
             @PathVariable UUID projectId
     ) {
-         deleteProject.execute(projectId);
+        deleteProject.execute(projectId);
 
-         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Project and associated tasks deleted");
-
+        return ApiResponse.success("Project and associated tasks deleted");
     }
 
     @GetMapping("/{projectId}")
-    public Project findById(
+    public ApiResponse<Project> findById(
             @PathVariable UUID projectId
     ) {
-        return findProjectById.execute(projectId);
+        return new ApiResponse<>(
+                true,
+                findProjectById.execute(projectId),
+                "Found project with success"
+        );
     }
 
     @PatchMapping("/{projectId}")
-    public ProjectResponseDTO update(
+    public ApiResponse<ProjectResponseDTO> update(
             @PathVariable UUID projectId,
             @RequestBody @Valid UpdateProjectDTO dto
     ) {
-        return updateProject.execute(projectId, dto);
+        return new ApiResponse<>(
+                true,
+                updateProject.execute(projectId, dto),
+                "Updated project with success"
+        );
     }
 }

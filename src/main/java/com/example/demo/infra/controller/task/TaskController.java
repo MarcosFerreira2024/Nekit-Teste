@@ -7,6 +7,7 @@ import com.example.demo.application.useCase.task.DeleteTask;
 import com.example.demo.application.useCase.task.FindTaskById;
 import com.example.demo.application.useCase.task.UpdateTask;
 import com.example.demo.domain.entity.Task;
+import com.example.demo.shared.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,25 +35,37 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task create(@RequestBody @Valid CreateTaskDTO dto) {
-        return createTask.execute(dto);
+    public ApiResponse<Task> create(@RequestBody @Valid CreateTaskDTO dto) {
+        return new ApiResponse<>(true,
+                createTask.execute(dto),
+                "Created task with success");
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
+    public ApiResponse<Object> delete(@PathVariable UUID id) {
         deleteTask.execute(id);
+        return ApiResponse.success("Deleted task with success");
+
     }
 
     @GetMapping("/{id}")
-    public Task findById(@PathVariable UUID id) {
-        return findTaskById.execute(id);
+    public ApiResponse<Task> findById(@PathVariable UUID id) {
+        return new ApiResponse<>(true,
+                findTaskById.execute(id),
+                "Found task with success");
+
     }
 
     @PutMapping("/{id}")
-    public Task update(
+    public ApiResponse<Task> update(
             @PathVariable UUID id,
             @RequestBody @Valid UpdateTaskDTO dto
     ) {
-        return updateTask.execute(id, dto);
+
+
+        return new ApiResponse<>(true,
+                updateTask.execute(id,dto),
+                "Updated task with success");
+
     }
 }
