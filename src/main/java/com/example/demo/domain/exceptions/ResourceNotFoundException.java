@@ -4,7 +4,7 @@ public class ResourceNotFoundException extends DomainException{
 
 
     public ResourceNotFoundException(String resource, Object value){
-        super("Resource : %s , with value %s not found".formatted(resource,value));
+        super("Resource : %s, with value %s was not found".formatted(resource,value));
 
     }
 }
