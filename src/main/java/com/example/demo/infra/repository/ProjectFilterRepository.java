@@ -25,42 +25,41 @@ public class ProjectFilterRepository {
     public List<Project> findByQuery(FindProjectDTO query){
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         List<String > statement = new ArrayList<String>();
-
         statement.add(" SELECT * FROM test_nekit.projects  WHERE 1=1 ");
 
-        if (query.completed() != null) {
+        if (query.completed() != null && !query.completed().toString().isBlank()) {
             statement.add(" AND completed = :completed");
             parameters.addValue("completed", query.completed());
         }
 
-        if (query.description() != null) {
+        if (query.description() != null && !query.description().isBlank()) {
             statement.add(" AND description = :description");
             parameters.addValue("description", query.description());
         }
 
-        if (query.projectId() != null) {
+        if (query.projectId() != null && !query.projectId().toString().isBlank()) {
             statement.add(" AND project_id = :projectId");
             parameters.addValue("projectId", query.projectId());
         }
 
-        if (query.title() != null) {
+        if (query.title() != null && !query.title().isBlank()) {
             statement.add(" AND title = :title");
             parameters.addValue("title", query.title());
         }
 
             statement.add(" LIMIT :size OFFSET :offset");
 
-            parameters.addValue("size", query.size());
+            parameters.addValue("size", (query.size() == null ? 10 : query.size() ));
+
+
             parameters.addValue(
                     "offset",
-                    (query.page() == 0 ? 0 :  query.page() -1) * query.size() == 0 ? 10 : query.size() );
+                    ((query.page() == null ) ? 0 : query.page() - 1)
+                            * (query.size() == null || query.size() == 0 ? 10 : query.size()));
 
 
-        System.out.println(String.join(" ", statement));
 
 
-
-        String sql = String.join(" ", statement);
 
         return jdbcTemplate.query(
                 sql,
