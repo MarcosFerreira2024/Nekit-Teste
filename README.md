@@ -21,11 +21,13 @@ gradlew.bat bootRun    # windows
 ```bash
 cd front
 npm install
+cp .env.example .env.local       # windows: copy .env.example .env.local
 npm run dev
 ```
 
 - App: http://localhost:3000
-- The front proxies `/api/backend/*` to the backend at `http://localhost:8080` (configured in `front/.env.local` / `next.config.ts`).
+- The front proxies `/api/backend/*` to the backend at `http://localhost:8080`.
+- Configure the backend URL in `front/.env.local` (`BACKEND_ORIGIN`, default `http://localhost:8080`). `.env.local` is gitignored, so create it locally from `.env.example`.
 
 ## See also
 
