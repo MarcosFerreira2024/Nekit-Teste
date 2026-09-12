@@ -1,15 +1,13 @@
 package com.example.demo.infra.controller.project;
 
 import com.example.demo.application.dto.project.*;
-import com.example.demo.application.useCase.project.CreateProject;
-import com.example.demo.application.useCase.project.DeleteProject;
-import com.example.demo.application.useCase.project.FindProjectById;
-import com.example.demo.application.useCase.project.UpdateProject;
+import com.example.demo.application.useCase.project.*;
 import com.example.demo.domain.entity.Project;
 import com.example.demo.shared.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,17 +18,20 @@ public class ProjectController {
     private final DeleteProject deleteProject;
     private final UpdateProject updateProject;
     private final FindProjectById findProjectById;
+    private final FindProject findProject;
 
     public ProjectController(
             CreateProject createProject,
             DeleteProject deleteProject,
             UpdateProject updateProject,
-            FindProjectById findProjectById
+            FindProjectById findProjectById,
+            FindProject findProject
     ) {
         this.createProject = createProject;
         this.deleteProject = deleteProject;
         this.updateProject = updateProject;
         this.findProjectById = findProjectById;
+        this.findProject = findProject;
     }
 
     @PostMapping
@@ -41,6 +42,18 @@ public class ProjectController {
                 true,
                 createProject.execute(dto),
                 "Created project with success"
+        );
+    }
+
+
+    @GetMapping
+    public ApiResponse<List<Project>> findByQuery(
+            @ModelAttribute FindProjectDTO query
+    ) {
+        return new ApiResponse<>(
+                true,
+                findProject.execute(query),
+                "Project queried with success"
         );
     }
 
