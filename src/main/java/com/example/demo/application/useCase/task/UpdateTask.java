@@ -43,6 +43,11 @@ public class UpdateTask {
             task.validateDueDate(dto.dueDate());
         }
 
+        if(dto.projectId() != null) {
+            task.setProjectId(dto.projectId());
+        }
+
+
         return taskRepository.save(task);
     }
 }
