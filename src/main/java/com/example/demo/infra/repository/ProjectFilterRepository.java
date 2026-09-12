@@ -48,15 +48,13 @@ public class ProjectFilterRepository {
             parameters.addValue("title", query.title());
         }
 
-        if (query.page() != null && query.size() != null) {
             statement.add(" LIMIT :size OFFSET :offset");
 
             parameters.addValue("size", query.size());
             parameters.addValue(
                     "offset",
-                    (query.page() == 0 ? 0 :  query.page() -1) * query.size()
-            );
-        }
+                    (query.page() == 0 ? 0 :  query.page() -1) * query.size() == 0 ? 10 : query.size() );
+
 
         System.out.println(String.join(" ", statement));
 
