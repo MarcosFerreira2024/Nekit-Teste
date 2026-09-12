@@ -1,22 +1,25 @@
 package com.example.demo.application.useCase.task;
 
-import com.example.demo.application.dto.task.CreateTaskDTO;
+
 import com.example.demo.domain.entity.Task;
+import com.example.demo.domain.exceptions.ResourceNotFoundException;
 import com.example.demo.infra.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
-public class CreateTask {
+public class FindTaskById {
 
     private final TaskRepository taskRepository;
 
-    public CreateTask(TaskRepository taskRepository) {
+    public FindTaskById(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
-    public Task execute(CreateTaskDTO dto) {
+    public Task execute(UUID id){
 
-        Task task = new Task(dto);
-        return taskRepository.save(task);
+        return taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task",id));
     }
+
 }
