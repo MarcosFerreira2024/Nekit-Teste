@@ -33,7 +33,7 @@ public class ProjectFilterRepository {
         }
 
         if (query.description() != null && !query.description().isBlank()) {
-            statement.add(" AND description = :description");
+            statement.add(" AND description ILIKE :description");
             parameters.addValue("description", query.description());
         }
 
@@ -43,7 +43,7 @@ public class ProjectFilterRepository {
         }
 
         if (query.title() != null && !query.title().isBlank()) {
-            statement.add(" AND title = :title");
+            statement.add(" AND title ILIKE :title");
             parameters.addValue("title", query.title());
         }
 
