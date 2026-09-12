@@ -10,9 +10,10 @@ public record FindTaskDTO(
 
    UUID projectId,
    Boolean completed,
-   TaskPriority priority,
-
-   LocalDate overdue,
+   String priority,
+   String title,
+   Boolean overdue,
+   LocalDate dueDate,
   @Size(max=999)
   Integer page,
    @Size(max=50)
