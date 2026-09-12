@@ -52,7 +52,7 @@ public class TaskFilterRepository {
 
         if (query.overdue() != null) {
             if (query.overdue()) {
-                statement.add(" AND due_date < CURRENT_DATE AND due_date IS NOT null AND completed = true  ");
+                statement.add(" AND due_date < CURRENT_DATE AND due_date IS NOT null AND completed = false  ");
             } else {
                 statement.add(" AND due_date >= CURRENT_DATE ");
             }
