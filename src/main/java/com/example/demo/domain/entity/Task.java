@@ -10,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.UUID;
 
 @Data
@@ -56,7 +57,7 @@ public class Task {
 
 
         try {
-            this.priority = TaskPriority.valueOf(dto.priority());
+            this.priority = TaskPriority.valueOf(dto.priority().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             throw new DomainException("Invalid Priority");
         }
