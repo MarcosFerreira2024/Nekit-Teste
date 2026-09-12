@@ -39,6 +39,13 @@ public class Task {
     public Task(CreateTaskDTO dto) {
         this.title = dto.title();
         this.validateDueDate(dto.dueDate());
+
+
+        try {
+            this.priority = TaskPriority.valueOf(dto.priority());
+        } catch (IllegalArgumentException e) {
+            throw new DomainException("Invalid Priority");
+        }
         this.dueDate = dto.dueDate();
         this.projectId = dto.projectId();
         this.completed = false;

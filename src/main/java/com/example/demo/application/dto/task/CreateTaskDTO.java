@@ -18,7 +18,7 @@ public record CreateTaskDTO(
         String title,
 
         @NotNull
-        TaskPriority priority,
+        String priority,
 
         LocalDate dueDate
 
