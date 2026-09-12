@@ -1,0 +1,26 @@
+package com.example.demo.application.dto.task;
+
+import com.example.demo.domain.enums.TaskPriority;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+public record CreateTaskDTO(
+
+        @NotNull
+        UUID projectId,
+
+        @NotBlank
+        @Size(min = 1, max = 60)
+        String title,
+
+        @NotNull
+        TaskPriority priority,
+
+        LocalDate dueDate
+
+) {
+}
