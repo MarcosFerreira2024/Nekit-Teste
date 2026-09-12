@@ -1,16 +1,17 @@
 package com.example.demo.infra.controller.task;
 
+import com.example.demo.application.dto.project.FindProjectDTO;
 import com.example.demo.application.dto.task.CreateTaskDTO;
+import com.example.demo.application.dto.task.FindTaskDTO;
 import com.example.demo.application.dto.task.UpdateTaskDTO;
-import com.example.demo.application.useCase.task.CreateTask;
-import com.example.demo.application.useCase.task.DeleteTask;
-import com.example.demo.application.useCase.task.FindTaskById;
-import com.example.demo.application.useCase.task.UpdateTask;
+import com.example.demo.application.useCase.task.*;
+import com.example.demo.domain.entity.Project;
 import com.example.demo.domain.entity.Task;
 import com.example.demo.shared.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,17 +22,23 @@ public class TaskController {
     private final DeleteTask deleteTask;
     private final UpdateTask updateTask;
     private final FindTaskById findTaskById;
+    private final FindTask findTask;
+
 
     public TaskController(
             CreateTask createTask,
             DeleteTask deleteTask,
             UpdateTask updateTask,
-             FindTaskById findTaskById
+            FindTaskById findTaskById,
+            FindTask findTask
+
     ) {
         this.createTask = createTask;
         this.deleteTask = deleteTask;
         this.updateTask = updateTask;
         this.findTaskById = findTaskById;
+        this.findTask = findTask;
+
     }
 
     @PostMapping
@@ -46,6 +53,17 @@ public class TaskController {
         deleteTask.execute(id);
         return ApiResponse.success("Deleted task with success");
 
+    }
+
+    @GetMapping
+    public ApiResponse<List<Task>> findByQuery(
+            @ModelAttribute FindTaskDTO query
+    ) {
+        return new ApiResponse<>(
+                true,
+                findTask.execute(query),
+                "Task queried with success"
+        );
     }
 
     @GetMapping("/{id}")
