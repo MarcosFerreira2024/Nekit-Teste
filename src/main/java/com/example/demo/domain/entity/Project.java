@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -29,7 +30,7 @@ public class Project {
     private Timestamp createdAt;
 
     @MappedCollection(idColumn = "project_id")
-    private List<Task> tasks;
+    private Set<Task> tasks;
 
     public Project(CreateProjectDTO dto) {
 
@@ -38,7 +39,7 @@ public class Project {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    public Project(List<Task> tasks, Timestamp createdAt, String description, String title, UUID id) {
+    public Project(Set<Task> tasks, Timestamp createdAt, String description, String title, UUID id) {
         this.tasks = tasks;
         this.createdAt = createdAt;
         this.description = description;
