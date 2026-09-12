@@ -9,6 +9,9 @@ import com.example.demo.domain.entity.Project;
 import com.example.demo.domain.entity.Task;
 import com.example.demo.shared.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -47,8 +50,35 @@ public class TaskController {
     @Operation(summary = "Create a task", description = "Returns a created task.")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully created a task"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request", content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Bad request"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            )),
+
     })
     public ApiResponse<Task> create(@RequestBody @Valid CreateTaskDTO dto) {
         return new ApiResponse<>(true,
@@ -60,8 +90,34 @@ public class TaskController {
     @Operation(summary = "Delete a Task", description = "Deletes a specific task.")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully deleted a task"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request and the resource doesn't exists"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request and the resource doesn't exists",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Resource, with value resourceValue was not found"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            )),
     })
     public ApiResponse<Object> delete(@PathVariable UUID id) {
         deleteTask.execute(id);
@@ -73,8 +129,34 @@ public class TaskController {
     @Operation(summary = "Find tasks by query", description = "Returns one or more tasks .")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully found one or more tasks"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Bad request"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            )),
     })
     public ApiResponse<List<Task>> findByQuery(
             @ModelAttribute FindTaskDTO query
@@ -90,8 +172,34 @@ public class TaskController {
     @Operation(summary = "Find a Task By id", description = "Returns a task by ID.")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully found a task"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Resource : Task, with value 123e4567-e89b-12d3-a456-426614174000 was not found"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            ))
     })
     public ApiResponse<Task> findById(@PathVariable UUID id) {
         return new ApiResponse<>(true,
@@ -104,8 +212,34 @@ public class TaskController {
     @Operation(summary = "Update a task", description = "Returns a updated task.")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully updated a task"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Task, with value 123e4567-e89b-12d3-a456-426614174000 was not found"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            ))
     })
     public ApiResponse<Task> update(
             @PathVariable UUID id,

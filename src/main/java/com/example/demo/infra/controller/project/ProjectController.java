@@ -5,6 +5,9 @@ import com.example.demo.application.useCase.project.*;
 import com.example.demo.domain.entity.Project;
 import com.example.demo.shared.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +45,34 @@ public class ProjectController {
     @Operation(summary = "Create a project", description = "Returns a created project.")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully created a project"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Bad request"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            ))
     })
 
     public ApiResponse<Project> create(
@@ -61,8 +90,34 @@ public class ProjectController {
     @Operation(summary = "Find projects by query", description = "Returns one or more projects .")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully found one or more projects"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Bad request"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            ))
     })
     @GetMapping
     public ApiResponse<List<Project>> findByQuery(
@@ -78,8 +133,34 @@ public class ProjectController {
     @Operation(summary = "Delete a Project", description = "Deletes a specific project and associated tasks.")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully deleted a project and associated tasks"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request and the resource doesn't exists"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request and the resource doesn't exists",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Resource doesn't exists"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            ))
     })
     @DeleteMapping("/{projectId}")
     public ApiResponse<Object> delete(
@@ -94,8 +175,34 @@ public class ProjectController {
     @Operation(summary = "Find a Project By id", description = "Returns a project by ID.")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully created a project"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Project not found"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            ))
     })
     @GetMapping("/{projectId}")
     public ApiResponse<Project> findById(
@@ -112,8 +219,34 @@ public class ProjectController {
     @Operation(summary = "Update a project", description = "Returns a updated project.")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully updated a project"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Project not found"
+                            }
+                            """
+                    )
+            )),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error",content =
+            @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ApiResponse.class),
+                    examples = @ExampleObject(
+                            value = """
+                            {
+                              "success": false,
+                              "data": null,
+                              "message": "Internal Server Error"
+                            }
+                            """
+                    )
+            ))
     })
     @PatchMapping("/{projectId}")
     public ApiResponse<ProjectResponseDTO> update(
