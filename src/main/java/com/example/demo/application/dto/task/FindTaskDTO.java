@@ -1,7 +1,9 @@
 package com.example.demo.application.dto.task;
 
-import com.example.demo.application.domain.enums.TaskPriority;
+import com.example.demo.domain.enums.TaskPriority;
+import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public record FindTaskDTO(
@@ -9,5 +11,10 @@ public record FindTaskDTO(
    UUID projectId,
    Boolean completed,
    TaskPriority priority,
-   Boolean overdue
+
+   LocalDate overdue,
+  @Size(max=999)
+  Integer page,
+   @Size(max=50)
+   Integer size
 ) {}
