@@ -37,4 +37,14 @@ public class Project {
         this.description = dto.description();
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
+
+    public Project(List<Task> tasks, Timestamp createdAt, String description, String title, UUID id) {
+        this.tasks = tasks;
+        this.createdAt = createdAt;
+        this.description = description;
+        this.title = title;
+        this.id = id;
+    }
+
+    public Project(){}
 }

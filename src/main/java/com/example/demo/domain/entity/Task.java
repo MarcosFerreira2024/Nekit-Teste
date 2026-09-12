@@ -36,6 +36,20 @@ public class Task {
     @Column("created_at")
     private Timestamp createdAt;
 
+    public Task(
+            UUID id,
+            String title,
+            TaskPriority priority,
+            Timestamp createdAt
+    ) {
+        this.id = id;
+        this.title = title;
+        this.priority = priority;
+        this.createdAt = createdAt;
+    }
+
+    public Task() {}
+
     public Task(CreateTaskDTO dto) {
         this.title = dto.title();
         this.validateDueDate(dto.dueDate());
