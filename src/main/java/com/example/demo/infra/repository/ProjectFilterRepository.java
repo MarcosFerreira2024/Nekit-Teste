@@ -60,6 +60,7 @@ public class ProjectFilterRepository {
 
 
 
+        String sql = String.join(" ", statement);
 
         return jdbcTemplate.query(
                 sql,
