@@ -4,9 +4,10 @@ import com.example.demo.application.dto.project.*;
 import com.example.demo.application.useCase.project.*;
 import com.example.demo.domain.entity.Project;
 import com.example.demo.shared.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +36,16 @@ public class ProjectController {
     }
 
     @PostMapping
+
+    /* bom, eu criei um metodo apiResponse sem saber que o swagger usa tambem o mesmo nome ai agora preciso importar tudo kkkkkkkkkkkkkkkkkkk */
+
+    @Operation(summary = "Create a project", description = "Returns a created project.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully created a project"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
+
     public ApiResponse<Project> create(
             @RequestBody @Valid CreateProjectDTO dto
     ) {
@@ -46,6 +57,13 @@ public class ProjectController {
     }
 
 
+
+    @Operation(summary = "Find projects by query", description = "Returns one or more projects .")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully found one or more projects"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     @GetMapping
     public ApiResponse<List<Project>> findByQuery(
             @ModelAttribute FindProjectDTO query
@@ -57,6 +75,12 @@ public class ProjectController {
         );
     }
 
+    @Operation(summary = "Delete a Project", description = "Deletes a specific project and associated tasks.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully deleted a project and associated tasks"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request and the resource doesn't exists"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     @DeleteMapping("/{projectId}")
     public ApiResponse<Object> delete(
             @PathVariable UUID projectId
@@ -66,6 +90,13 @@ public class ProjectController {
         return ApiResponse.success("Project and associated tasks deleted");
     }
 
+
+    @Operation(summary = "Find a Project By id", description = "Returns a project by ID.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully created a project"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     @GetMapping("/{projectId}")
     public ApiResponse<Project> findById(
             @PathVariable UUID projectId
@@ -77,6 +108,13 @@ public class ProjectController {
         );
     }
 
+
+    @Operation(summary = "Update a project", description = "Returns a updated project.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully updated a project"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "If had a bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     @PatchMapping("/{projectId}")
     public ApiResponse<ProjectResponseDTO> update(
             @PathVariable UUID projectId,
