@@ -7,8 +7,6 @@ import java.util.UUID;
 public record FindProjectDTO(
 
     UUID projectId,
-    Boolean completed,
-
     @Size(max=60)
     String title,
     @Size(max=60)
